@@ -1,7 +1,8 @@
 ---
-title: "Markdown"
+title: "Markdown 基本语法"
 date: 2018-11-29T18:15:07+08:00
-draft: true
+draft: false
+tags: ["markdown"]
 ---
 
 # Welcome to Leanote! 欢迎来到 Leanote!
@@ -104,16 +105,16 @@ Markdown 扩展支持:
 
 ## 5.1 表格
 
-| Item     | Value  |
-| -------- | ------ |
+| Item     | Value |
+| -------- | ----- |
 | Computer | 1600 |
 | Phone    | 12   |
 | Pipe     | 1    |
 
 可以指定对齐方式, 如 Item 列左对齐, Value 列右对齐, Qty 列居中对齐
 
-| Item     |  Value | Qty |
-| :------- | -----: | :-: |
+| Item     | Value | Qty |
+| :------- | ----: | :-: |
 | Computer | 1600 |  5  |
 | Phone    |   12 | 12  |
 | Pipe     |    1 | 234 |
@@ -220,7 +221,6 @@ cond(no)->op
 质能守恒方程可以用一个很简洁的方程式 $E=mc^2$ 来表达。
 
 $$
-
 $$
 
 $$f(x_1,x_x,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$
