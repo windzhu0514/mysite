@@ -3,6 +3,7 @@ title: "Markdown 基本语法"
 date: 2018-11-29T18:15:07+08:00
 draft: false
 tags: ["markdown"]
+categories: ["markdown"]
 ---
 
 # Welcome to Leanote! 欢迎来到 Leanote!

@@ -1,4 +1,4 @@
-baseURL = "https://www.ljc.space/"
+baseURL = "https://ljc.space/"
 languageCode = "zh-CN"
 title = "风竹的个人网站"
 theme = "maupassant"
@@ -11,8 +11,7 @@ theme = "maupassant"
   subtitle = "C/C++、MFC、Go语言(golang)开发者"
   keywords = "golang,go语言,go语言笔记,博客,C,C++,mfc"
   description = "专注于IT互联网，包括但不限于Go语言(golang)、C/C++等"
-
-
+  busuanzi = true
 [params.utteranc]
     enable = true
     repo = "windzhu0514/windzhu0514.github.io"    # 存储评论的Repo，格式为 owner/repo

@@ -3,6 +3,7 @@ title: "go get添加进度"
 date: 2018-11-30T14:50:56+08:00
 draft: false
 tags: ["go", "git"]
+categories: ["golang"]
 ---
 
 go get 比较大的包时会很慢, 可能几分钟或更长, 让人误以为卡死了.
