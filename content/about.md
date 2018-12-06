@@ -14,3 +14,6 @@ C/C++、MFC、Go 语言(golang)开发者
 
 扫码关注公众号
 ![](/images/qrcode_for_gh_1cc9b31082be_258.jpg)
+
+扫码领红包 生活小滋润
+![](/images/zfb_red_package_20181206094935.png)
