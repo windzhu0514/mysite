@@ -129,7 +129,8 @@ func  main() {
 		for {
 			select {
 				case  <-chClose:
-				return
+					return
+				default:
 			}
 
 		// do something
