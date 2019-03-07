@@ -3,7 +3,7 @@ title: "goroutine并发控制"
 date: 2018-12-07T10:05:37+08:00
 draft: false
 tags: ["go", "goroutine", "并发"]
-categories: ["go"]
+categories: ["golang"]
 ---
 
 ## 通信
@@ -156,6 +156,7 @@ func  main() {
 - 从带缓冲的 channel 读出数据，如果 channel 中无数据，会导致该 goroutine 阻塞，直到其他 goroutine 向这个 channel 中写入数据
 
 - 从带缓冲的 channel 读出数据，如果 channel 中有数据，该 goroutine 不会阻塞
+
   ```go
   // 读完结束
   for {
@@ -258,6 +259,7 @@ func  WithValue(parent Context, key, val interface{}) Context
 - 例子
 
 WithCancel
+
 ```go
 func  main() {
 	ctx, cancel  := context.WithCancel(context.Background())
@@ -524,6 +526,7 @@ context canceled
   使用 Context 的程序应遵循以下这些规则来保持跨包接口的一致和方便静态分析工具(go vet)来检查上下文传播是否有潜在问题。
 
   - 不要将 Context 存储在结构类型中，而是显式的传递给每个需要的函数； Context 应该作为函数的第一个参数传递，通常命名为 ctx：
+
     ```go
         func  DoSomething(ctx context.Context, arg Arg) error {
         // ... use ctx ...

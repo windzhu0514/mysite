@@ -2,6 +2,8 @@ baseURL = "https://ljc.space/"
 languageCode = "zh-CN"
 title = "风竹的个人网站"
 theme = "maupassant"
+publishDir ="../windzhu0514.github.io"
+# pygmentsCodefences = true
 
 [author]
   name = "风竹"
@@ -20,7 +22,7 @@ theme = "maupassant"
     #2. url 全链接URL路径的方式。
     #3. title 按页面title标题的方式。
     issueTerm = "pathname"  
-    theme = "github-light" # 样式主题，有github-light和github-dark两种
+    theme = "github-dark" # 样式主题，有github-light和github-dark两种
 
   [menu]
   [[menu.main]]
