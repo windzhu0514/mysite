@@ -11,9 +11,13 @@ categories: ["golang"]
 ## int --> string
 
 转换函数：
+
 [fmt.Sprintf](https://golang.google.cn/pkg/fmt/#Sprintf "fmt.Sprintf")：格式化范围 math.MinInt64 -> math.MaxInt64
+
 [strconv.Itoa](https://golang.google.cn/pkg/strconv/#Itoa "strconv.Itoa")：格式化范围 math.MinInt64 -> math.MaxInt64
+
 [strconv.FormatInt](https://golang.google.cn/pkg/strconv/#FormatInt "strconv.FormatInt")：格式化范围 math.MinInt64 -> math.MaxInt64
+
 [strconv.FormatUint](https://golang.google.cn/pkg/strconv/#FormatUint "strconv.FormatUint")：格式化范围 0 -> math.MaxUint64
 
 ```go
@@ -45,8 +49,11 @@ strconv.FormatUint(math.MaxUint64, 10)
 ## string --> int
 
 转换函数：
+
 [fmt.Sscanf](https://golang.google.cn/pkg/fmt/#Sscanf "fmt.Sscanf")：格式化范围 math.MinInt64 -> math.MaxUint64
+
 [strconv.ParseInt](https://golang.google.cn/pkg/strconv/#ParseInt "strconv.ParseInt")：格式化范围 math.MinInt64 -> math.MaxInt64
+
 [strconv.ParseUint](https://golang.google.cn/pkg/strconv/#ParseUint "strconv.ParseUint")：格式化范围 0 -> math.MaxUint64
 
 ```go
@@ -114,7 +121,7 @@ System.out.println(price);
 ```
 
 ```go
-// go 四舍五入
+// go 四舍五入 转3位小数 *1000）/1000 依次类推
 var discoutAmount = 252.945
 var discoutTaxAmount = 41.989999999999995
 price := math.Round((discoutAmount+discoutTaxAmount)*100) / 100
