@@ -3,6 +3,7 @@ languageCode = "zh-CN"
 title = "一蓑烟雨任平生"
 theme = "maupassant"
 publishDir ="../windzhu0514.github.io"
+hasCJKLanguage = true
 
 [author]
   name = "风竹"
