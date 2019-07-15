@@ -3,6 +3,7 @@ echo "git pulling ..."
 git pull
 
 
+
 echo "generating site ..."
 hugo
 
