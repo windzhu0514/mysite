@@ -4,6 +4,7 @@ git pull
 
 
 
+
 echo "generating site ..."
 hugo
 
