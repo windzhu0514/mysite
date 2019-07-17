@@ -1,4 +1,5 @@
 #baseURL = "https://ljc.space/"
+relativeURLs = true
 languageCode = "zh-CN"
 title = "一蓑烟雨任平生"
 theme = "maupassant"
