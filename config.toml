@@ -1,6 +1,6 @@
 #baseURL = "https://ljc.space/"
 relativeURLs = true
-language = "zh-CN"
+languageCode = "zh-CN"
 title = "一蓑烟雨任平生"
 theme = "maupassant"
 publishDir ="../website"
@@ -16,6 +16,16 @@ defaultContentLanguage = "zh"
   keywords = "golang,go语言,go语言笔记,博客,C,C++,mfc"
   description = "专注于IT互联网，包括但不限于Go语言(golang)、C/C++等"
   busuanzi = true
+  # 自定义摘要默认是70
+  summaryLength = 140
+
+ 
+
+# 开启版权声明
+#[params.cc]
+#    name = "知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议"
+#    link = "https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+
 [params.utteranc]
     enable = true
     repo = "windzhu0514/windzhu0514.github.io"    # 存储评论的Repo，格式为 owner/repo
@@ -27,12 +37,9 @@ defaultContentLanguage = "zh"
     theme = "github-light" # 样式主题，有github-light和github-dark两种
 
   [menu]
+
   [[menu.main]]
     identifier = "about"
     name = "关于"
     url = "/about/"
     weight = 2
-
-[frontmatter]
-toc = true
-    

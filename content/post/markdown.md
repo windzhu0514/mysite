@@ -4,6 +4,7 @@ date: 2018-11-29T18:15:07+08:00
 draft: false
 tags: ["markdown"]
 categories: ["markdown"]
+toc : true
 ---
 
 # Welcome to Leanote! 欢迎来到 Leanote!
