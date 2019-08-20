@@ -13,8 +13,8 @@ defaultContentLanguage = "zh"
 
 [params]
   author = "风竹"
-  subtitle = "C/C++、MFC、Go语言(golang)开发者"
-  keywords = "golang,go语言,go语言笔记,博客,C,C++,mfc"
+  subtitle = "Go语言(golang)、C/C++、MFC开发者"
+  keywords = "go,golang,go语言,博客,C,C++,mfc"
   description = "专注于IT互联网，包括但不限于Go语言(golang)、C/C++等"
   busuanzi = true
   # 自定义摘要默认是70
