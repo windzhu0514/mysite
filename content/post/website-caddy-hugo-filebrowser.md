@@ -13,7 +13,7 @@ categories: ["golang"]
 - docker部署
 - 网站后台管理
 
-> 假定安装过程在非root用户下
+*假定安装过程在非root用户下*
 
 # hugo
 ```shell
@@ -347,6 +347,8 @@ Rename
 Upload  
 Delete  
 ~~Save~~  
+
+如果要使用变量，需设置一下配置
 
 **Global Settings -- Execute on shell**：配置里指定要使用的shell`bash -c`
 
