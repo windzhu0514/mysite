@@ -34,16 +34,18 @@ Remote - SSH已支持系统版本： x86_64 Debian 8+, Ubuntu 16.04+, CentOS / R
 2. 在弹出的窗口下拉列表里选择`Configure SSH Hosts...`，回车
 3. 在列表里选择要使用的SSH配置文件路径，回车
 4. 在打开的文件里添加远程机器人的配置
-```sh
-Host example-remote-linux-machine-with-identity-file
-    User your-user-name-on-host
-    HostName another-host-fqdn-or-ip-goes-here
-    IdentityFile ~/.ssh/id_rsa-remote-ssh
-```
 5. 保存后重新运行`Remote-SSH: Connect to Host`命令
 6. 在下拉列表里选择远程机器，回车
 7. 等待远程机器安装`VS Code Server`，窗口左下角会显示`远程打开中`
 8. 连接成功后，打开vscode的资源管理器，点击`打开文件夹`，在弹出的窗口中选择要打开的目录，打开后该目录下的内容会自动同步到文件列表里，欢快的操作吧
+
+配置内容：
+```
+    Host example-remote-linux-machine-with-identity-file
+        User your-user-name-on-host
+        HostName another-host-fqdn-or-ip-goes-here
+        IdentityFile ~/.ssh/id_rsa-remote-ssh
+```
 
 ## 使用用户和密码连接
 
@@ -70,7 +72,7 @@ Host example-remote-linux-machine
 3. 点击`确定`开始安装
 4. 安装完成后，欢快的操作吧
 
-安装的go tools会先下载到本地，再传送到远程机器，部分go tools需要翻墙安装，只需设置本地代理即可。
+如果远程服务没有go程序，安装的go tools会先下载到本地，再传送到远程机器，部分go tools需要翻墙安装，只需设置本地代理即可。
 
 # 问题及解决方法
 
