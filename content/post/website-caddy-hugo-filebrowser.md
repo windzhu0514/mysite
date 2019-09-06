@@ -371,7 +371,7 @@ git push
 
 默认命令是阻塞执行，如果需要非阻塞运行，在命令前面添加`&`
 ```sh
-&pwd
+&git pull
 &git add $FILE
 &git commit -m"add or modify post"
 &git push
