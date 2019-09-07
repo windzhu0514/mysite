@@ -8,6 +8,7 @@ categories: ["golang"]
 使用caddy和hugo搭建个人网站
 
 功能：
+
 - 自动https
 - 自动响应git hook，运行hugo编译markdown
 - 开机启动服务
