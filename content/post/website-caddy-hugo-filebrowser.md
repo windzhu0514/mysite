@@ -390,6 +390,18 @@ filebrowser命令执行时的当前目录是程序启动的目录
 (filebrowser -c /home/ljc/websiteconf/filebrowser.toml > /var/log/filebrowser/filebrowser.log 2>&1 &)
 ```
 
+或者自己手动修改源代码设置命令工作目录，然后新增一个账户，设置该账户的目录（scope）为要提交项目的根目录即.git的目录，需要自动提交时，使用此账户增加或修改文件。
+```go
+cmd := exec.Command(command[0], command[1:]...)
+cmd.Dir = dst // 添加此行  
+cmd.Env = append(os.Environ(), fmt.Sprintf("FILE=%s", path))
+cmd.Env = append(cmd.Env, fmt.Sprintf("SCOPE=%s", user.Scope))
+cmd.Env = append(cmd.Env, fmt.Sprintf("TRIGGER=%s", evt))
+cmd.Env = append(cmd.Env, fmt.Sprintf("USERNAME=%s", user.Username))
+cmd.Env = append(cmd.Env, fmt.Sprintf("DESTINATION=%s", dst))
+```
+
+此方法是临时解决方案，具体功能等待filebrowser新版。issue：https://github.com/filebrowser/filebrowser/issues/854
 
 ## 系统服务
 
@@ -444,7 +456,7 @@ sudo docker run -d -p 9000:9000 --name alpine-website-d  windzhu0514/caddy-hugo:
 ```
 
 浏览器输入https://ip:9000访问网站，如果提示`404 Site [ip:port] is not served on this interface`
-容器里caddy监听外网无法访问 修改Caddyfile站点地址为`:9000`
+容器里caddy监听外网无法访问 修改Caddyfile站点地址为:9000`
 
 ## filebrowser
 
