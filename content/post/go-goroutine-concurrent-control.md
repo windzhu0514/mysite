@@ -4,7 +4,6 @@ date: 2018-12-07T10:05:37+08:00
 draft: false
 tags: ["go", "goroutine", "并发"]
 categories: ["golang"]
-toc : true
 ---
 
 ## 通信
