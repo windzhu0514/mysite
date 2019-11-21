@@ -15,7 +15,7 @@ categories: ["golang"]
 - docker部署
 - 网站后台管理
 
-*假定安装过程在非root用户下*
+*假定安装过程在非root用户下* 
 
 # hugo
 ```shell
@@ -103,7 +103,10 @@ Caddyfile配置信息
 ```shell
 example.com {
     root /var/www/website
-    log / /var/log/caddy/access.log {
+    log /var/log/caddy/access.log {
+        rotate_size 50  # 50M以后轮转
+    }
+    errors /var/log/caddy/errors.log {
         rotate_size 50  # 50M以后轮转
     }
     git {
@@ -146,7 +149,7 @@ sudo touch /var/log/caddy/access.log
 sudo mkdir /var/log/hugo
 sudo touch /var/log/hugo/hugo.log
 
-sudo chown -R www-data :www-data /var/log/caddy
+sudo chown -R www-data:www-data /var/log/caddy
 sudo chmod -R 0775 /var/log/caddy
 
 sudo chown -R www-data :www-data /var/log/caddy
@@ -282,6 +285,18 @@ sudo systemctl stop caddy.service
 
 暂未尝试
 
+如果启动后出现或其他错误，先使用
+```
+/usr/local/bin/caddy -conf /etc/caddy/Caddyfile 
+查看错误原因
+```
+```
+Nov 11 04:10:30 localhost.localdomain systemd[1]: Started Caddy HTTP/2 web server.
+Nov 11 04:10:30 localhost.localdomain systemd[1]: caddy.service: main process exited, code=exited, status=2/INVALIDARGUMENT
+Nov 11 04:10:30 localhost.localdomain systemd[1]: Unit caddy.service entered failed state.
+Nov 11 04:10:30 localhost.localdomain systemd[1]: caddy.service failed.
+```
+
 # filebrowser实现文件浏览和后台管理
 
 官方文档：https://filebrowser.xyz/
@@ -390,18 +405,6 @@ filebrowser命令执行时的当前目录是程序启动的目录
 (filebrowser -c /home/ljc/websiteconf/filebrowser.toml > /var/log/filebrowser/filebrowser.log 2>&1 &)
 ```
 
-或者自己手动修改源代码设置命令工作目录，然后新增一个账户，设置该账户的目录（scope）为要提交项目的根目录即.git的目录，需要自动提交时，使用此账户增加或修改文件。
-```go
-cmd := exec.Command(command[0], command[1:]...)
-cmd.Dir = dst // 添加此行  
-cmd.Env = append(os.Environ(), fmt.Sprintf("FILE=%s", path))
-cmd.Env = append(cmd.Env, fmt.Sprintf("SCOPE=%s", user.Scope))
-cmd.Env = append(cmd.Env, fmt.Sprintf("TRIGGER=%s", evt))
-cmd.Env = append(cmd.Env, fmt.Sprintf("USERNAME=%s", user.Username))
-cmd.Env = append(cmd.Env, fmt.Sprintf("DESTINATION=%s", dst))
-```
-
-此方法是临时解决方案，具体功能等待filebrowser新版。issue：https://github.com/filebrowser/filebrowser/issues/854
 
 ## 系统服务
 
@@ -456,7 +459,7 @@ sudo docker run -d -p 9000:9000 --name alpine-website-d  windzhu0514/caddy-hugo:
 ```
 
 浏览器输入https://ip:9000访问网站，如果提示`404 Site [ip:port] is not served on this interface`
-容器里caddy监听外网无法访问 修改Caddyfile站点地址为:9000`
+容器里caddy监听外网无法访问 修改Caddyfile站点地址为`:9000`
 
 ## filebrowser
 
@@ -473,16 +476,125 @@ sudo docker run -d --restart=always --name filebrowser \
 
 # 代理网站
 
+## 为什么要代理
+
 域名指向中国大陆境内服务器且开通Web服务时需要备案。域名指向中国大陆境外服务器（例如中国香港等大陆境外）不需要备案。首次备案时间需要一周到一个月才能完成，如果更换了服务器，需要修改备案信息。如果手里有境外服务器，域名绑定到境外服务器服务器，如果境外服务器性能较低，可以把网站部署在境内服务器，由境外服务器跳转到境内服务器。
 
+## 代理配置
 境外服务器的代理依然使用强大的caddy，配置如下
 ```sh
 ljc.space {
-    cache
-    proxy / http://ip:9000 # 转发所有
+    log /var/log/caddy/access.log {
+        rotate_size 50  # 50M以后轮转
+    }
+    errors /var/log/caddy/errors.log {
+        rotate_size 50  # 50M以后轮转
+    }
+    proxy / https://windzhu0514.github.io
+    proxy /elf 国内ip:9200 {
+        without /elf
+    }
+
+    proxy /elf/ws 国内ip:9200 {
+        without /elf
+        websocket
+    }
 }
 
 www.ljc.space {
     redir https://ljc.space{uri}
 }
+```
+
+## 代理服务开机启动
+
+代理服务启动脚本修改自官方systemd启动脚本：https://github.com/caddyserver/caddy/tree/master/dist/init/linux-systemd
+
+修改的内容：
+```shell
+修改
+StartLimitIntervalSec=14400
+StartLimitBurst=10
+为
+StartLimitInterval=14400
+StartLimitBurst=10
+并由[Unit]下移到[Service]下
+
+修改
+; User and group the process will run as.
+User=www-data
+Group=www-data
+为
+; User and group the process will run as.
+User=root
+Group=root
+
+修改
+ReadWritePaths=/etc/ssl/caddy
+ReadWriteDirectories=/etc/ssl/caddy
+为
+;ReadWritePaths=/etc/ssl/caddy
+ReadWriteDirectories=/etc/ssl/caddy
+```
+
+代理服务开机启动脚本
+
+```shell
+[Unit]
+Description=Caddy HTTP/2 web server
+Documentation=https://caddyserver.com/docs
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+[Service]
+Restart=on-abnormal
+
+; Do not allow the process to be restarted in a tight loop. If the
+; process fails to start, something critical needs to be fixed.
+StartLimitInterval=14400
+StartLimitBurst=10
+
+; User and group the process will run as.
+User=root
+Group=root
+
+; Letsencrypt-issued certificates will be written to this directory.
+Environment=CADDYPATH=/etc/ssl/caddy
+
+; Always set "-root" to something safe in case it gets forgotten in the Caddyfile.
+ExecStart=/usr/local/bin/caddy -log stdout -log-timestamps=false -agree=true -conf=/etc/caddy/Caddyfile -root=/var/tmp
+ExecReload=/bin/kill -USR1 $MAINPID
+
+; Use graceful shutdown with a reasonable timeout
+KillMode=mixed
+KillSignal=SIGQUIT
+TimeoutStopSec=5s
+
+; Limit the number of file descriptors; see `man systemd.exec` for more limit settings.
+LimitNOFILE=1048576
+; Unmodified caddy is not expected to use more than that.
+LimitNPROC=512
+
+; Use private /tmp and /var/tmp, which are discarded after caddy stops.
+PrivateTmp=true
+; Use a minimal /dev (May bring additional security if switched to 'true', but it may not work on Raspberry Pi's or other devices, so it has been disabled in this dist.)
+PrivateDevices=false
+; Hide /home, /root, and /run/user. Nobody will steal your SSH-keys.
+ProtectHome=true
+; Make /usr, /boot, /etc and possibly some more folders read-only.
+ProtectSystem=full
+; 鈥?except /etc/ssl/caddy, because we want Letsencrypt-certificates there.
+;   This merely retains r/w access rights, it does not add any new. Must still be writable on the host!
+;ReadWritePaths=/etc/ssl/caddy
+ReadWriteDirectories=/etc/ssl/caddy
+
+; The following additional security directives only work with systemd v229 or later.
+; They further restrict privileges that can be gained by caddy. Uncomment if you like.
+; Note that you may have to add capabilities required by any plugins in use.
+;CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+;AmbientCapabilities=CAP_NET_BIND_SERVICE
+;NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
 ```
