@@ -4,7 +4,7 @@ relativeURLs = true
 languageCode = "zh-CN"
 title = "一蓑烟雨任平生"
 theme = "maupassant"
-publishDir ="../website"
+publishDir ="./public"
 hasCJKLanguage = true
 defaultContentLanguage = "zh"
 
