@@ -20,7 +20,10 @@ defaultContentLanguage = "zh"
   # 自定义摘要默认是70
   summaryLength = 140
 
- 
+# [markup]
+#   [markup.highlight]
+#     lineNos = true
+    #style = "github"
 
 # 开启版权声明
 #[params.cc]
