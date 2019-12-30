@@ -3,6 +3,7 @@ title: "caddy-hugo-filebrowser搭建个人网站和后台管理"
 date: 2019-09-06T17:40:56+08:00
 tags: ["go", "caddy","hugo","filebrowser","网站","docker"]
 categories: ["golang"]
+toc: true
 ---
 
 使用caddy和hugo搭建个人网站

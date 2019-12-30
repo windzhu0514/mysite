@@ -3,6 +3,7 @@ title: "VSCode Remote Development-go开发环境搭建"
 date: 2019-08-19T18:54:39+08:00
 tags: ["go", "ssh"]
 categories: ["golang"]
+toc: true
 ---
 
 # 安装vscode
@@ -92,6 +93,6 @@ vscode github issues：https://github.com/microsoft/vscode-remote-release/issues
 2 设置代理参照一下链接：
 https://github.com/Microsoft/vscode-remote-release/issues/78#issuecomment-491229576
 
-# 参考资料：
+# 参考资料
 
 [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
